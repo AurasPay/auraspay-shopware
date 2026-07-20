@@ -1,0 +1,21 @@
+{
+  "name": "auraspay/shopware-payment",
+  "description": "AURAS Pay cryptocurrency payment gateway for Shopware 6",
+  "version": "1.0.0",
+  "type": "shopware-platform-plugin",
+  "license": "MIT",
+  "authors": [{"name": "AURAS Pay", "homepage": "https://auraspay.com"}],
+  "require": {
+    "shopware/core": "~6.7.0",
+    "shopware/storefront": "~6.7.0"
+  },
+  "autoload": {"psr-4": {"AurasPay\\Shopware\\": "src/"}},
+  "extra": {
+    "shopware-plugin-class": "AurasPay\\Shopware\\AurasPayShopware",
+    "label": {"en-GB": "AURAS Pay", "de-DE": "AURAS Pay"},
+    "description": {
+      "en-GB": "Accept cryptocurrency payments through AURAS Pay.",
+      "de-DE": "Kryptowährungszahlungen mit AURAS Pay akzeptieren."
+    }
+  }
+}

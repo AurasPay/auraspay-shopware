@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
+  <services>
+    <defaults autowire="true" autoconfigure="true" public="false"/>
+    <service id="AurasPay\Shopware\Service\AurasPayClient"/>
+    <service id="AurasPay\Shopware\Payment\AurasPayPaymentHandler" public="true">
+      <tag name="shopware.payment.method"/>
+    </service>
+    <service id="AurasPay\Shopware\Storefront\Controller\AurasPayController" public="true">
+      <argument type="service" id="AurasPay\Shopware\Service\AurasPayClient"/>
+      <argument type="service" id="Shopware\Core\System\SystemConfig\SystemConfigService"/>
+      <argument type="service" id="order_transaction.repository"/>
+      <argument type="service" id="Shopware\Core\Checkout\Order\Aggregate\OrderTransaction\OrderTransactionStateHandler"/>
+      <call method="setContainer"><argument type="service" id="service_container"/></call>
+    </service>
+  </services>
+</container>

@@ -1,0 +1,40 @@
+{% sw_extends '@Storefront/storefront/base.html.twig' %}
+
+{% block base_content %}
+<div class="container-main">
+  <div class="container py-5">
+    <div class="card mx-auto" style="max-width:720px">
+      <div class="card-body p-4 p-md-5">
+        <div class="d-flex align-items-center gap-3 mb-4">
+          <img src="{{ asset('bundles/auraspayshopware/auraspay.png') }}" alt="AURAS Pay" width="72" height="72">
+          <div><h1 class="h3 mb-1">Pay with AURAS Pay</h1><p class="text-muted mb-0">Choose your cryptocurrency and blockchain network.</p></div>
+        </div>
+        {% if error %}<div class="alert alert-danger">{{ error }}</div>{% endif %}
+        <form method="post" action="{{ path('frontend.auraspay.select', {transactionId: transactionId}) }}">
+          <input type="hidden" name="returnUrl" value="{{ returnUrl }}">
+          <input type="hidden" name="token" value="{{ token }}">
+          <div class="mb-3">
+            <label class="form-label">Cryptocurrency</label>
+            <input type="hidden" id="auraspay-currency" name="currency" value="USDC">
+            <div class="dropdown">
+              <button class="btn btn-light border w-100 d-flex align-items-center justify-content-between" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <span class="d-flex align-items-center gap-2"><img id="auraspay-selected-icon" src="{{ asset('bundles/auraspayshopware/crypto/usdc.svg') }}" alt="" width="28" height="28"><strong id="auraspay-selected-label">USDC</strong></span><span>▾</span>
+              </button>
+              <ul class="dropdown-menu w-100">
+                {% for currency, networks in assets %}
+                  <li><button class="dropdown-item d-flex align-items-center gap-2 auraspay-currency-option" type="button" data-currency="{{ currency }}" data-icon="{{ asset('bundles/auraspayshopware/crypto/' ~ currency|lower ~ '.svg') }}"><img src="{{ asset('bundles/auraspayshopware/crypto/' ~ currency|lower ~ '.svg') }}" alt="" width="26" height="26"><span>{{ currency }}</span></button></li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+          <div class="mb-4"><label class="form-label" for="auraspay-network">Network</label><select class="form-select" id="auraspay-network" name="network" required></select></div>
+          <button class="btn btn-primary btn-lg w-100" type="submit">Continue to secure payment</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+(() => { const assets = {{ assets|json_encode|raw }}, currency = document.getElementById('auraspay-currency'), network = document.getElementById('auraspay-network'), label = document.getElementById('auraspay-selected-label'), icon = document.getElementById('auraspay-selected-icon'); const refresh = () => { network.innerHTML = ''; assets[currency.value].forEach(value => network.add(new Option(value.toUpperCase(), value))); }; document.querySelectorAll('.auraspay-currency-option').forEach(button => button.addEventListener('click', () => { currency.value = button.dataset.currency; label.textContent = button.dataset.currency; icon.src = button.dataset.icon; refresh(); })); refresh(); })();
+</script>
+{% endblock %}

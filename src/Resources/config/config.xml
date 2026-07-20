@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/shopware/shopware/trunk/src/Core/System/SystemConfig/Schema/config.xsd">
+  <card>
+    <title>AURAS Pay credentials</title>
+    <title lang="de-DE">AURAS Pay Zugangsdaten</title>
+    <input-field type="password"><name>apiKey</name><label>API Key</label><required>true</required></input-field>
+    <input-field type="password"><name>webhookSecret</name><label>Webhook Secret</label><required>true</required></input-field>
+    <component name="sw-alert"><name>webhookInfo</name><label>Webhook URL: /store-api/auraspay/webhook</label></component>
+  </card>
+</config>
